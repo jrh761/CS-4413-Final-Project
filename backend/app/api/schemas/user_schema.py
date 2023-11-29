@@ -1,14 +1,17 @@
 from pydantic import BaseModel
+from typing import Optional
+
 
 class UserBase(BaseModel):
-    name: str
+    first_name: str
+    last_name: str
     email: str
+    role: Optional[str] = "BasicUser"
+
 
 class UserCreate(UserBase):
-    pass
+    password: str
+
 
 class User(UserBase):
     id: int
-
-    class Config:
-        from_attributes = True
