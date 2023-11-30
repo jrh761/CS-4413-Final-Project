@@ -1,0 +1,12 @@
+.HomeContainer {
+    background-color: rgb(51, 67, 51);
+    padding: 0.5rem;
+    border-radius: 2rem !important;
+    color: whitesmoke !important;
+}
+
+.HomeBodyDiv {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    background-color: rgba(0, 0, 0, 0);
+}

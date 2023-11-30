@@ -1,0 +1,18 @@
+.CardWrapper {
+    width: 90%;
+    margin: 5%;
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.2rem !important;
+    border-radius: 0.5rem !important;
+    border-color: rgba(68, 94, 72, 0.34) !important;
+    border-width: 0.2rem !important;
+}
+
+.CardName {
+    text-decoration: none !important;
+    color: black;
+}
+
+.CardStatus {
+    color: rgb(51, 67, 51) !important;
+}
