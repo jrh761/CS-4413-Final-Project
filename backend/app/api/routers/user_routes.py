@@ -90,18 +90,8 @@ def authenticate_user(db, username: str, password: str):
     return user
 
 
-@router.post("/", response_model=User)
-def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = UserModel(first_name=user.first_name,
-                        last_name=user.last_name, email=user.email)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
-
-
 @router.get("/", response_model=list[User])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     users = db.query(UserModel).offset(skip).limit(limit).all()
     return users
 
@@ -119,7 +109,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token = create_access_token(
         data={"sub": user.email, "role": user.role, "user_id": user.id}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "user": user}
 
 
 @router.get("/validate-session")

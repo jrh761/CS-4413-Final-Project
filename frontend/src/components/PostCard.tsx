@@ -1,22 +1,27 @@
-import "./PostCard.css";
 import { Link } from "react-router-dom";
-import Card from 'react-bootstrap/Card';
+import Card from "react-bootstrap/Card";
+import { Post } from "../pages/HomePage";
+import "./PostCard.css";
+import moment from "moment";
 
-function TextExample() {
+type Props = {
+  post: Post;
+};
+
+const PostCard: React.FC<Props> = ({ post }) => {
   return (
     <Card className="CardWrapper">
       <Card.Body>
         <Link to="#Profile" className="CardName">
-          <Card.Title>Name</Card.Title>
+          <Card.Title>{`${post.user.first_name} ${post.user.last_name}`}</Card.Title>
         </Link>
-        <Card.Subtitle className="CardStatus">Status</Card.Subtitle>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
+        <Card.Subtitle className="CardStatus">
+          {moment(post.created_at).format("MMMM Do YYYY: h:mm a")}
+        </Card.Subtitle>
+        <Card.Text>{post.post_content}</Card.Text>
       </Card.Body>
     </Card>
   );
-}
+};
 
-export default TextExample;
+export default PostCard;

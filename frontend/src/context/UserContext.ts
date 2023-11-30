@@ -16,9 +16,10 @@ export type User = {
 };
 
 export type UserContextValue = {
-  data: LoginToken;
+  data: LoginToken | null;
   error: any;
   login: (username: string, password: string) => Promise<void>;
+  logout: () => void;
 };
 
 export const unauthenticatedUser: LoginToken = {
@@ -35,9 +36,10 @@ export const unauthenticatedUser: LoginToken = {
 };
 
 const UserContext = createContext<UserContextValue>({
-  data: unauthenticatedUser,
+  data: null,
   error: null,
   login: async (username: string, password: string) => {},
+  logout: () => {},
 });
 
 export default UserContext;

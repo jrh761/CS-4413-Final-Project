@@ -11,13 +11,11 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  console.log(data);
-
   useEffect(() => {
-    if (data.isAuthenticated) {
+    if (data && data.isAuthenticated) {
       navigate("/");
     }
-  }, []);
+  }, [data, navigate]);
 
   useEffect(() => {
     if (
@@ -46,11 +44,11 @@ const LoginPage: React.FC = () => {
     >
       <Row>
         <Col>
-          <Card>
+          <Card style={{ padding: 50 }}>
             <Card.Body>
               <Card.Title className="text-center">Login</Card.Title>
               <Form>
-                <Form.Group className="pb-4" controlId="formBasicEmail">
+                <Form.Group className="py-4" controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     type="email"

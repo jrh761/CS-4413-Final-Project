@@ -6,6 +6,7 @@ class UserBase(BaseModel):
     first_name: str
     last_name: str
     email: str
+    profile_picture_url: Optional[str] = None
     role: Optional[str] = "BasicUser"
 
 

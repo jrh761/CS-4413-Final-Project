@@ -2,6 +2,8 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 
+from ..schemas.user_schema import UserBase
+
 
 class PostBase(BaseModel):
     post_content: str
@@ -12,10 +14,13 @@ class PostCreate(PostBase):
     pass
 
 
-class Post(PostBase):
+class Post(BaseModel):
     id: int
+    post_content: str
+    post_image: str
     created_at: datetime
     like_counter: int
+    user: UserBase
 
 
 class ReplyBase(BaseModel):

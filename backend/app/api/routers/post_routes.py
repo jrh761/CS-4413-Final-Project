@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import joinedload
 from ..dependencies.database import SessionLocal, engine
 from ..models.post import Post as PostModel
 from ..models.user import User as UserModel
@@ -7,6 +8,7 @@ from ..models.replies import Reply as ReplyModel
 from ..schemas.post_schema import PostCreate, Post, ReplyCreate, Reply
 from ..routers.user_routes import oauth2_scheme
 from ..routers.user_routes import get_current_user, TokenData
+
 
 router = APIRouter(
     prefix="/api/posts",
@@ -25,7 +27,8 @@ def get_db():
 
 @router.get("/", response_model=list[Post])
 def get_all_posts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
-    posts = db.query(PostModel).offset(skip).limit(limit).all()
+    posts = db.query(PostModel).options(joinedload(
+        PostModel.user)).offset(skip).limit(limit).all()
     return posts
 
 

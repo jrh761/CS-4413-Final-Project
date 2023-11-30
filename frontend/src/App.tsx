@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "./utils/api";
 
 import Header from "./components/Header";
-import HomePage from "./pages/Home";
+import HomePage from "./pages/HomePage";
 import UserContext, {
   LoginToken,
   unauthenticatedUser,
@@ -24,6 +24,8 @@ const App: React.FC = () => {
     if (storageUser) {
       const parsedUser: LoginToken = JSON.parse(storageUser);
       validateSession(parsedUser);
+    } else {
+      setUser(unauthenticatedUser);
     }
   }, []);
 
@@ -55,20 +57,27 @@ const App: React.FC = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      setUser({
+      const newLoginToken: LoginToken = {
         ...response.data,
         isAuthenticated: true,
-      });
-      localStorage.setItem("user", JSON.stringify(response.data));
+      };
+      setUser(newLoginToken);
+      localStorage.setItem("user", JSON.stringify(newLoginToken));
       window.location.href = "/";
     } catch (error: any) {
       setLoginError(error);
     }
   };
 
+  const logout = async () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    window.location.href = "/";
+  };
+
   return (
     <UserContext.Provider
-      value={{ data: user ?? data, error: loginError, login }}
+      value={{ data: user ?? data, error: loginError, login, logout }}
     >
       <Router>
         <Header />
