@@ -17,6 +17,7 @@ from pydantic import BaseModel
 class Token(BaseModel):
     access_token: str
     token_type: str
+    user: User
 
 
 class TokenData(BaseModel):
@@ -121,6 +122,26 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
+@router.get("/validate-session")
+async def validate_session(token: str = Depends(oauth2_scheme)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: str = payload.get("user_id")
+        if user_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid session or session expired",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        return {"detail": "Session is valid"}
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid session or session expired",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
 @router.post("/register", response_model=User)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     hashed_password = get_password_hash(user.password)
@@ -146,7 +167,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     access_token = create_access_token(
         data={"sub": user.email, "role": user.role, "user_id": user.id}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "user": user}
 
 
 @router.post("/add_admin/{user_id}")

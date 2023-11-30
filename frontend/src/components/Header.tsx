@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import UserContext from "../context/UserContext";
 
 const Header: React.FC = () => {
+  const { data, login } = useContext(UserContext);
+
+  useEffect(() => {
+    // login("test@localhost.com", "password");
+  }, []);
+
+  // console.log("USER", user);
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
