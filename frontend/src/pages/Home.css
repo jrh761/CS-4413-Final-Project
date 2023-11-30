@@ -5,7 +5,8 @@
     color: whitesmoke !important;
 }
 
-.ContentDiv {
-    margin-left: 2rem;
-    margin-right: 2rem;
+.HomeBodyDiv {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    background-color: rgba(0, 0, 0, 0);
 }
