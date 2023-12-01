@@ -5,6 +5,7 @@ import PostCard from "../components/PostCard";
 import "./HomePage.css";
 import axios from "../utils/api";
 import UserContext from "../context/UserContext";
+import CreatePost from "../components/CreatePost";
 
 export type User = {
   first_name: string;
@@ -52,13 +53,37 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <Container className="HomeContainer">
-      <div className="HomeBodyDiv">
-        {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
-      </div>
-    </Container>
+    <div>
+      {data?.isAuthenticated ? (
+        <div>
+          <Container style={{ marginBottom: 20 }} className="HomeContainer">
+            <div className="HomeBodyDiv">
+              <CreatePost setPosts={setPosts} posts={posts} />
+            </div>
+          </Container>
+          <Container className="HomeContainer">
+            <div></div>
+            <div className="HomeBodyDiv">
+              <h1 className="HomeTitle">Latest Posts</h1>
+              {posts.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+          </Container>
+        </div>
+      ) : (
+        <Container className="HomeContainer">
+          <h1>Welcome to the Social Media App</h1>
+          <p>
+            Create an account{" "}
+            <a style={{ color: "whitesmoke" }} href="/register">
+              here
+            </a>{" "}
+            to see what other users are posting!
+          </p>
+        </Container>
+      )}
+    </div>
   );
 };
 
