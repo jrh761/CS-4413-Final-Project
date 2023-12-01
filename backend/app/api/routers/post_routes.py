@@ -32,6 +32,16 @@ def get_all_posts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
     return posts
 
 
+@router.get("/user/{user_id}", response_model=list[Post])
+def get_all_posts_by_user(user_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    posts = db.query(PostModel).filter(PostModel.user_id ==
+                                       user_id).options(joinedload(PostModel.user)).all()
+    if not posts:
+        raise HTTPException(
+            status_code=404, detail="No posts found for this user")
+    return posts
+
+
 @router.post("/create", response_model=Post)
 def create_post(post: PostCreate, db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_user), token: str = Depends(oauth2_scheme)):
     print(current_user.user_id)
@@ -40,6 +50,24 @@ def create_post(post: PostCreate, db: Session = Depends(get_db), current_user: T
     db.commit()
     db.refresh(db_post)
     return db_post
+
+
+@router.delete("/{post_id}")
+def delete_post(post_id: int, db: Session = Depends(get_db), current_user: TokenData = Depends(get_current_user), token: str = Depends(oauth2_scheme)):
+    post = db.query(PostModel).filter(PostModel.id == post_id).first()
+    print(f'{post.user_id != current_user.user_id or current_user.role != "Admin"}')
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    if post.user_id != current_user.user_id:
+        if current_user.role == "Admin":
+            db.delete(post)
+            db.commit()
+            return {"message": "Post deleted"}
+        raise HTTPException(
+            status_code=403, detail="Not authorized to delete this post")
+    db.delete(post)
+    db.commit()
+    return {"message": "Post deleted"}
 
 
 @router.post("/like/{post_id}")

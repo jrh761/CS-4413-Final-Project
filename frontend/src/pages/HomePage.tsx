@@ -113,6 +113,22 @@ const HomePage: React.FC = () => {
     }
   };
 
+  const handleDelete = async (postId: number) => {
+    try {
+      const response = await axios.delete(`/posts/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${data?.access_token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setPosts((prevPosts) => prevPosts.filter((p) => p.id !== postId));
+      }
+    } catch (error: any) {
+      return;
+    }
+  };
+
   return (
     <div>
       {data?.isAuthenticated ? (
@@ -142,6 +158,7 @@ const HomePage: React.FC = () => {
                       post={post}
                       handleLike={handleLike}
                       repliesCount={replyCount}
+                      handleDelete={handleDelete}
                     />
                   );
                 })}

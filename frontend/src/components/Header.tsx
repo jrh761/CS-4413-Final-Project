@@ -52,6 +52,13 @@ const Header: React.FC = () => {
           {user?.isAuthenticated && (
             <Nav>
               <Navbar.Text style={{ color: "whitesmoke" }}>
+                {user.user.role === "Admin" && (
+                  <span
+                    style={{ color: "lightgoldenrodyellow", fontWeight: 800 }}
+                  >
+                    You are an admin user -
+                  </span>
+                )}{" "}
                 Logged in as:{" "}
                 <strong>{`${user.user.first_name} ${user.user.last_name}`}</strong>
               </Navbar.Text>

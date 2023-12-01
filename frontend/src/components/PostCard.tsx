@@ -9,6 +9,7 @@ import UserContext from "../context/UserContext";
 type Props = {
   post: Post | any;
   handleLike: (postId: number) => void;
+  handleDelete?: (postId: number) => void;
   repliesCount?: number | null;
   hideReplyButton?: boolean;
   hideReplies?: boolean;
@@ -20,6 +21,7 @@ const PostCard: React.FC<Props> = ({
   repliesCount,
   hideReplyButton,
   hideReplies,
+  handleDelete,
 }) => {
   const { data } = useContext(UserContext);
 
@@ -63,6 +65,18 @@ const PostCard: React.FC<Props> = ({
                   >
                     <small className="">View Replies</small>
                   </div>
+                  {(data?.user.id === post.user.id ||
+                    data?.user.role === "Admin") &&
+                    handleDelete && (
+                      <div
+                        className="reply-button"
+                        onClick={() => {
+                          handleDelete(post.id);
+                        }}
+                      >
+                        <small className="">Delete</small>
+                      </div>
+                    )}
                 </>
               )}
             </div>

@@ -23,6 +23,7 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     username: Optional[str] = None
     user_id: Optional[int] = None
+    role: Optional[str] = None
 
 
 router = APIRouter(
@@ -58,7 +59,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         user_id: str = payload.get("user_id")
         if user_id is None:
             raise credentials_exception
-        token_data = TokenData(user_id=user_id)
+        token_data = TokenData(user_id=user_id, role=payload.get("role"))
     except JWTError as e:
         raise credentials_exception
     return token_data

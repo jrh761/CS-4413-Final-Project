@@ -65,7 +65,7 @@ const RegisterPage: React.FC = () => {
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     type="string"
-                    placeholder="Enter first name"
+                    placeholder="Enter last name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                   />
