@@ -12,6 +12,7 @@ import UserContext, {
 } from "./context/UserContext";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import RepliesPage from "./pages/RepliesPage";
 
 const App: React.FC = () => {
   const { data } = useContext(UserContext);
@@ -85,8 +86,9 @@ const App: React.FC = () => {
         <Routes>
           <Route index path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/post/:postId" element={<RepliesPage />} />
         </Routes>
       </Router>
     </UserContext.Provider>

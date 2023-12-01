@@ -2,16 +2,43 @@ import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import "./Profile.css";
 import "./HomePage.css";
-import UserContext, { LoginToken } from "../context/UserContext";
+import UserContext, { LoginToken, User } from "../context/UserContext";
+import { useParams } from "react-router";
+import axios from "../utils/api";
 
 const Profile: React.FC = () => {
-  const { data, logout } = useContext(UserContext);
+  const { userId } = useParams();
+  const { data } = useContext(UserContext);
   const [user, setUser] = useState<LoginToken | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    console.log("Received data:", data);
     setUser(data);
+    fetchUsers();
   }, [data]);
+
+  const fetchUsers = async () => {
+    if (!user || !user.access_token || user.access_token.length <= 0) {
+      return;
+    }
+
+    try {
+      const response = await axios.get("/users", {
+        headers: {
+          Authorization: `Bearer ${user?.access_token}`,
+        },
+      });
+      if (response.status === 200) {
+        setUsers(response.data);
+      } else {
+        setUsers([]);
+      }
+    } catch (error: any) {
+      setUsers([]);
+    }
+  };
+
+  const matchedUser = users.find((user) => user.id === parseInt(userId ?? "0"));
 
   return (
     <Container className="HomeContainer">
@@ -21,8 +48,8 @@ const Profile: React.FC = () => {
             {user?.isAuthenticated ? (
               <div>
                 <img src="profile-picture.jpg" alt="Profile Picture" />
-                <h2>{`${user?.user.first_name}`}</h2>
-                <p>Email: {user?.user.email}</p>
+                <h2>{`${matchedUser?.first_name} ${matchedUser?.last_name}`}</h2>
+                <p>Email: {matchedUser?.email}</p>
               </div>
             ) : (
               <p style={{ color: "black" }}>Loading user data...</p>
