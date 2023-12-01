@@ -30,9 +30,12 @@ const PostCard: React.FC<Props> = ({
   return (
     <Card className="CardWrapper">
       <Card.Body>
-        <Link to={`profile/${data?.user.id}`} className="CardName">
-          <Card.Title>{`@${post.user.first_name} ${post.user.last_name}`}</Card.Title>
-        </Link>
+        <Card.Title
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            window.location.href = `/profile/${post.user.id}`;
+          }}
+        >{`@${post.user.first_name} ${post.user.last_name}`}</Card.Title>
         <Card.Subtitle className="CardStatus">
           {moment(post.created_at).format("MMMM Do YYYY: h:mm a")}
         </Card.Subtitle>

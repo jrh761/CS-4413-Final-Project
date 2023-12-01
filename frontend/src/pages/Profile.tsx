@@ -149,7 +149,7 @@ const Profile: React.FC = () => {
             <section className="profile">
               {user?.user.first_name ? (
                 <div>
-                  <img src="profile-picture.jpg" alt="Profile Picture" />
+                  {/* <img src="profile-picture.jpg" alt="Profile Picture" /> */}
                   <h2>{`@${matchedUser?.first_name} ${matchedUser?.last_name}`}</h2>
                   <p>Email: {matchedUser?.email}</p>
                 </div>
