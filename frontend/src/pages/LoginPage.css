@@ -1,0 +1,18 @@
+.LoginCard {
+    background-color: rgba(255, 255, 255, 0.813)!important;
+}
+
+.w-100 {
+    color: whitesmoke !important;
+    background-color: rgba(0, 0, 0, 0.454) !important;
+    border-radius: 1rem !important;
+    border-color: rgba(0, 0, 0, 0) !important;
+    border: 1px solid rgba(255, 255, 255, 0.329) !important;
+    text-align: center;
+}
+
+.w-100:hover {
+    background-color: rgb(51, 67, 51) !important;
+    border: 1px solid whitesmoke !important;
+    transition-duration: 0s;
+}

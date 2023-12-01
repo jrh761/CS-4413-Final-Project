@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import PostCard from "../components/PostCard";
 
 import "./HomePage.css";
+import "../components/PostCard.css";
 import axios from "../utils/api";
 import UserContext from "../context/UserContext";
 import CreatePost from "../components/CreatePost";
@@ -150,8 +151,8 @@ const HomePage: React.FC = () => {
         </div>
       ) : (
         <Container className="HomeContainer">
-          <h1>Welcome to the Social Media App</h1>
-          <p>
+          <h1 className="HomeTitle">Welcome to the Social Media App</h1>
+          <p className="PostText">
             Create an account{" "}
             <a style={{ color: "whitesmoke" }} href="/register">
               here

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
 import UserContext from "../context/UserContext";
 import axios from "../utils/api";
+import "./LoginPage.css";
 
 const RegisterPage: React.FC = () => {
   const { data, error, login } = useContext(UserContext);
@@ -46,7 +47,7 @@ const RegisterPage: React.FC = () => {
     >
       <Row>
         <Col>
-          <Card style={{ padding: 50 }}>
+          <Card style={{ padding: 50 }} className="LoginCard">
             <Card.Body>
               <Card.Title className="text-center">Register</Card.Title>
               <Form>
