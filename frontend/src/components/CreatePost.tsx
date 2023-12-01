@@ -36,8 +36,9 @@ const CreatePost: React.FC<Props> = ({ posts, setPosts }) => {
         },
       });
 
-      if (response.status === 200 && response.data.length > 0) {
-        setPosts([...posts, response.data]);
+      if (response.status === 200) {
+        setPosts([response.data, ...posts]);
+        setPostContent("");
       }
     } catch (error: any) {
       setPosts([]);

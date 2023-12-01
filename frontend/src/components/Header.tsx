@@ -1,12 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Container,
-  Nav,
-  Navbar,
-  Button,
-  ButtonGroup,
-  NavDropdown,
-} from "react-bootstrap";
+import { Container, Nav, Navbar, Button } from "react-bootstrap";
 
 import UserContext, { LoginToken } from "../context/UserContext";
 
@@ -37,7 +30,10 @@ const Header: React.FC = () => {
             <Nav.Link className="HeaderButton" href="/">
               Feed
             </Nav.Link>
-            <Nav.Link className="HeaderButton" href="/Profile">
+            <Nav.Link
+              className="HeaderButton"
+              href={`profile/${data?.user.id}`}
+            >
               Profile
             </Nav.Link>
           </Nav>

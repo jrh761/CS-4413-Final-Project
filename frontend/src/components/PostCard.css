@@ -37,3 +37,34 @@
     margin-left: 5%;
     margin-right: 5%;
 }
+
+.like-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: rgb(68, 94, 72);
+    color: whitesmoke;
+}
+
+.like-button:hover {
+    background-color: rgb(51, 67, 51);
+}
+
+.reply-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: rgb(117, 160, 124);
+    color: whitesmoke;
+    margin-left: 8px;
+}
+
+.reply-button:hover {
+    background-color: rgb(51, 67, 51);
+}

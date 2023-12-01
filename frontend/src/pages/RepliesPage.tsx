@@ -3,45 +3,32 @@ import { Container } from "react-bootstrap";
 import PostCard from "../components/PostCard";
 
 import "./HomePage.css";
-import "../components/PostCard.css";
 import axios from "../utils/api";
 import UserContext from "../context/UserContext";
 import CreatePost from "../components/CreatePost";
+import { Post } from "./HomePage";
+import { useParams } from "react-router";
 
-export type User = {
-  first_name: string;
-  last_name: string;
-  profile_picture: string;
-  email: string;
-  role: string;
-};
-
-export type Post = {
-  post_content: string;
-  post_image: string;
-  id: number;
-  created_at: string;
-  like_counter: number;
-  user: User;
-};
-
-const HomePage: React.FC = () => {
+const RepliesPage: React.FC = () => {
+  const { postId } = useParams();
   const { data } = useContext(UserContext);
 
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [post, setPost] = useState<Post | null>(null);
   const [repliesCount, setRepliesCount] = useState<{ [key: number]: number }>(
     {}
   );
 
   useEffect(() => {
-    getPosts();
+    getPost();
   }, [data]);
 
   useEffect(() => {
-    posts.forEach((post) => {
-      getReplies(post.id);
-    });
-  }, [posts]);
+    if (!post) {
+      return;
+    }
+
+    getReplies(post.id);
+  }, [post]);
 
   const getReplies = async (postId: number) => {
     if (data && data?.access_token.length <= 0) {
@@ -65,27 +52,22 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const getPosts = async () => {
+  const getPost = async () => {
     if (data && data?.access_token.length <= 0) {
       return;
     }
     try {
-      const response = await axios.get("/posts", {
+      const response = await axios.get(`/posts/${postId}`, {
         headers: {
           Authorization: `Bearer ${data?.access_token}`,
         },
       });
 
-      if (response.status === 200 && response.data.length > 0) {
-        const sortedPosts = response.data.sort((a: Post, b: Post) => {
-          return (
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-          );
-        });
-        setPosts(sortedPosts);
+      if (response.status === 200) {
+        setPost(response.data);
       }
     } catch (error: any) {
-      setPosts([]);
+      return;
     }
   };
 
@@ -102,10 +84,13 @@ const HomePage: React.FC = () => {
       );
 
       if (response.status === 200) {
-        setPosts((prevPosts) =>
-          prevPosts.map((p) =>
-            p.id === postId ? { ...p, like_counter: p.like_counter + 1 } : p
-          )
+        setPost((prevPost) =>
+          prevPost
+            ? {
+                ...prevPost,
+                like_counter: prevPost.like_counter + 1,
+              }
+            : null
         );
       }
     } catch (error: any) {
@@ -115,7 +100,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      {data?.isAuthenticated ? (
+      {/* {data?.isAuthenticated ? (
         <div>
           <Container style={{ marginBottom: 20 }} className="HomeContainer">
             <div className="HomeBodyDiv">
@@ -151,8 +136,8 @@ const HomePage: React.FC = () => {
         </div>
       ) : (
         <Container className="HomeContainer">
-          <h1 className="HomeTitle">Welcome to the Social Media App</h1>
-          <p className="PostText">
+          <h1>Welcome to the Social Media App</h1>
+          <p>
             Create an account{" "}
             <a style={{ color: "whitesmoke" }} href="/register">
               here
@@ -166,9 +151,9 @@ const HomePage: React.FC = () => {
             </a>
           </p>
         </Container>
-      )}
+      )} */}
     </div>
   );
 };
 
-export default HomePage;
+export default RepliesPage;
