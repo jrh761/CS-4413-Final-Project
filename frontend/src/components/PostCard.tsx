@@ -7,12 +7,20 @@ import { useContext } from "react";
 import UserContext from "../context/UserContext";
 
 type Props = {
-  post: Post;
+  post: Post | any;
   handleLike: (postId: number) => void;
-  repliesCount: number | null;
+  repliesCount?: number | null;
+  hideReplyButton?: boolean;
+  hideReplies?: boolean;
 };
 
-const PostCard: React.FC<Props> = ({ post, handleLike, repliesCount }) => {
+const PostCard: React.FC<Props> = ({
+  post,
+  handleLike,
+  repliesCount,
+  hideReplyButton,
+  hideReplies,
+}) => {
   const { data } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -21,43 +29,51 @@ const PostCard: React.FC<Props> = ({ post, handleLike, repliesCount }) => {
     <Card className="CardWrapper">
       <Card.Body>
         <Link to="Profile" className="CardName">
-          <Card.Title>{`${post.user.first_name} ${post.user.last_name}`}</Card.Title>
+          <Card.Title>{`@${post.user.first_name} ${post.user.last_name}`}</Card.Title>
         </Link>
         <Card.Subtitle className="CardStatus">
           {moment(post.created_at).format("MMMM Do YYYY: h:mm a")}
         </Card.Subtitle>
-        <Card.Text>{post.post_content}</Card.Text>
+        <Card.Text>
+          {hideReplies ? post.reply_content : post.post_content}
+        </Card.Text>
       </Card.Body>
-      <Card.Footer>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ display: "flex" }}>
-            <div className="like-button" onClick={() => handleLike(post.id)}>
-              <small className="">Like post</small>
+      {!hideReplies && (
+        <Card.Footer>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex" }}>
+              <div className="like-button" onClick={() => handleLike(post.id)}>
+                <small className="">Like post</small>
+              </div>
+              {!hideReplyButton && (
+                <>
+                  <div
+                    className="reply-button"
+                    onClick={() => {
+                      navigate(`/post/${post.id}`);
+                    }}
+                  >
+                    <small className="">Reply</small>
+                  </div>
+                  <div
+                    className="reply-button"
+                    onClick={() => {
+                      navigate(`/post/${post.id}`);
+                    }}
+                  >
+                    <small className="">View Replies</small>
+                  </div>
+                </>
+              )}
             </div>
-            <div
-              className="reply-button"
-              onClick={() => {
-                navigate(`/post/${post.id}`);
-              }}
-            >
-              <small className="">Reply</small>
-            </div>
-            <div
-              className="reply-button"
-              onClick={() => {
-                navigate(`/post/${post.id}`);
-              }}
-            >
-              <small className="">View Replies</small>
+            <div>
+              <small className="text-muted">
+                {post.like_counter} likes | {repliesCount ?? 0} Replies
+              </small>
             </div>
           </div>
-          <div>
-            <small className="text-muted">
-              {post.like_counter} likes | {repliesCount ?? 0} Replies
-            </small>
-          </div>
-        </div>
-      </Card.Footer>
+        </Card.Footer>
+      )}
     </Card>
   );
 };

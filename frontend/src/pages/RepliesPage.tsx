@@ -8,15 +8,14 @@ import UserContext from "../context/UserContext";
 import CreatePost from "../components/CreatePost";
 import { Post } from "./HomePage";
 import { useParams } from "react-router";
+import CreateReply from "../components/CreateReply";
 
 const RepliesPage: React.FC = () => {
   const { postId } = useParams();
   const { data } = useContext(UserContext);
 
   const [post, setPost] = useState<Post | null>(null);
-  const [repliesCount, setRepliesCount] = useState<{ [key: number]: number }>(
-    {}
-  );
+  const [replies, setReplies] = useState<Post[]>([]);
 
   useEffect(() => {
     getPost();
@@ -42,10 +41,12 @@ const RepliesPage: React.FC = () => {
       });
 
       if (response.status === 200 && response.data.length > 0) {
-        setRepliesCount({
-          ...repliesCount,
-          [postId]: response.data.length,
+        const sortedReplies = response.data.sort((a: Post, b: Post) => {
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
         });
+        setReplies(sortedReplies);
       }
     } catch (error: any) {
       return;
@@ -100,58 +101,73 @@ const RepliesPage: React.FC = () => {
 
   return (
     <div>
-      {/* {data?.isAuthenticated ? (
-        <div>
-          <Container style={{ marginBottom: 20 }} className="HomeContainer">
-            <div className="HomeBodyDiv">
-              <CreatePost setPosts={setPosts} posts={posts} />
-            </div>
-          </Container>
-          <Container className="HomeContainer">
-            <div></div>
-            <div className="HomeBodyDiv">
-              <h1 className="HomeTitle">Latest Posts</h1>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 20,
-                  marginTop: 20,
-                }}
-              >
-                {posts.map((post) => {
-                  const replyCount = repliesCount[post.id] ?? 0;
-                  return (
-                    <PostCard
-                      key={post.id}
-                      post={post}
-                      handleLike={handleLike}
-                      repliesCount={replyCount}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </Container>
-        </div>
-      ) : (
+      <div>
         <Container className="HomeContainer">
-          <h1>Welcome to the Social Media App</h1>
-          <p>
-            Create an account{" "}
-            <a style={{ color: "whitesmoke" }} href="/register">
-              here
-            </a>{" "}
-            to see what other users are posting!
-          </p>
-          <p>
-            Already a user?{" "}
-            <a style={{ color: "whitesmoke" }} href="/login">
-              Log in here
-            </a>
-          </p>
+          <div></div>
+          <div className="HomeBodyDiv">
+            <h1 className="HomeTitle">View Post</h1>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 20,
+                marginTop: 20,
+              }}
+            >
+              {post && (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  handleLike={handleLike}
+                  repliesCount={replies.length}
+                  hideReplyButton={true}
+                />
+              )}
+            </div>
+          </div>
         </Container>
-      )} */}
+        <Container className="HomeContainer">
+          <div className="HomeBodyDiv">
+            <CreateReply
+              setReplies={setReplies}
+              replies={replies}
+              postId={post?.id ?? 0}
+              post={post ?? null}
+            />
+          </div>
+        </Container>
+        <Container className="HomeContainer">
+          <div></div>
+          <div className="HomeBodyDiv">
+            <h1 className="HomeTitle">Replies</h1>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 20,
+                marginTop: 20,
+              }}
+            >
+              {replies.map((post) => {
+                return (
+                  <PostCard
+                    key={post.id}
+                    post={post}
+                    handleLike={handleLike}
+                    hideReplyButton={true}
+                    hideReplies={true}
+                  />
+                );
+              })}
+              {replies.length <= 0 && (
+                <h5 style={{ marginLeft: 50 }}>
+                  Be the first to say something!
+                </h5>
+              )}
+            </div>
+          </div>
+        </Container>
+      </div>
     </div>
   );
 };

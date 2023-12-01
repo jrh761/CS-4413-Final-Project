@@ -73,7 +73,10 @@ def reply_to_post(post_id: int, reply: ReplyCreate, db: Session = Depends(get_db
                        user_id=current_user.user_id)
     db.add(reply)
     db.commit()
-    return {"message": "Reply added"}
+    db.refresh(reply)
+    reply = db.query(ReplyModel).options(joinedload(
+        ReplyModel.user)).filter(ReplyModel.id == reply.id).first()
+    return reply
 
 
 @router.get("/replies/{post_id}", response_model=list[Reply])

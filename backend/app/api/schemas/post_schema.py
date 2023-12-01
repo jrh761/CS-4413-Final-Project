@@ -35,3 +35,4 @@ class Reply(ReplyBase):
     id: int
     post_id: int
     created_at: datetime
+    user: UserBase
