@@ -1,11 +1,7 @@
 # CS-4413-Final-Project
 
-## Database
+## Running the project
 
-### Connect to database
-
-```bash
-docker exec -it cs-4413-final-project-db-1 bash
-
-psql -U user -d database
+```
+docker compose up --build -d
 ```
