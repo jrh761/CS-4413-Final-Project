@@ -30,7 +30,7 @@ const PostCard: React.FC<Props> = ({
   return (
     <Card className="CardWrapper">
       <Card.Body>
-        <Link to="Profile" className="CardName">
+        <Link to={`profile/${data?.user.id}`} className="CardName">
           <Card.Title>{`@${post.user.first_name} ${post.user.last_name}`}</Card.Title>
         </Link>
         <Card.Subtitle className="CardStatus">

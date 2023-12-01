@@ -27,15 +27,19 @@ const Header: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link className="HeaderButton" href="/">
-              Feed
-            </Nav.Link>
-            <Nav.Link
-              className="HeaderButton"
-              href={`profile/${data?.user.id}`}
-            >
-              Profile
-            </Nav.Link>
+            {user?.isAuthenticated && (
+              <>
+                <Nav.Link className="HeaderButton" href="/">
+                  Feed
+                </Nav.Link>
+                <Nav.Link
+                  className="HeaderButton"
+                  href={`profile/${data?.user.id}`}
+                >
+                  Profile
+                </Nav.Link>
+              </>
+            )}
           </Nav>
           <Nav>
             {!user?.isAuthenticated && (

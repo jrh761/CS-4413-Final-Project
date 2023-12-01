@@ -176,7 +176,7 @@ const HomePage: React.FC = () => {
             </a>{" "}
             to see what other users are posting!
           </p>
-          <p>
+          <p className="PostText">
             Already a user?{" "}
             <a style={{ color: "whitesmoke" }} href="/login">
               Log in here
