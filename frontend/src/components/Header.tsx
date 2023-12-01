@@ -32,12 +32,12 @@ const Header: React.FC = () => {
           Social Media App
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse id="basic-navbar-nav" className="navbarCollapse">
           <Nav className="me-auto">
             <Nav.Link className="HeaderButton" href="/">
               Feed
             </Nav.Link>
-            <Nav.Link className="HeaderButton" href="/">
+            <Nav.Link className="HeaderButton" href="/Profile">
               Profile
             </Nav.Link>
           </Nav>

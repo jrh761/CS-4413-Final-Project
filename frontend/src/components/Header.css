@@ -1,6 +1,7 @@
 .HeaderContainer {
     background-color: rgb(51, 67, 51);
-    border-radius: 2rem;
+    border-bottom-left-radius: 1rem !important;
+    border-bottom-right-radius: 1rem !important;
     padding: 0.5rem;
     color: whitesmoke;
 }
@@ -13,16 +14,22 @@
 .HeaderButton {
     color: whitesmoke !important;
     background-color: rgba(255, 255, 255, 0.329) !important;
-    border-radius: 2rem !important;
+    border-radius: 1rem !important;
     border-color: rgba(0, 0, 0, 0) !important;
     padding-left: 2rem;
     padding-right: 2rem;
     margin-left: 1rem;
     margin-right: 1rem;
+    margin-bottom: 0.3rem;
+    margin-top: 0.3rem;
     border: 1px solid rgba(255, 255, 255, 0.329) !important;
 }
 
 .HeaderButton:hover {
     background-color: rgb(51, 67, 51) !important;
     border: 1px solid whitesmoke !important;
+}
+
+.HeaderButton {
+    text-align: center;
 }
