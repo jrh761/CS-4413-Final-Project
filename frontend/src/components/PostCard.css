@@ -17,3 +17,23 @@
 .CardStatus {
     color: rgb(51, 67, 51) !important;
 }
+
+.PostWrapper {
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.PostTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    color: whitesmoke !important;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.PostText {
+    font-size: 1rem;
+    color: whitesmoke;
+    margin-left: 5%;
+    margin-right: 5%;
+}

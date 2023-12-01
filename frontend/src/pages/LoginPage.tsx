@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Container, Row, Col, Card } from "react-bootstrap";
 import UserContext from "../context/UserContext";
+import "./LoginPage.css";
+import "../components/Header.css";
 
 const LoginPage: React.FC = () => {
   const { data, login, error } = useContext(UserContext);
@@ -44,7 +46,7 @@ const LoginPage: React.FC = () => {
     >
       <Row>
         <Col>
-          <Card style={{ padding: 50 }}>
+          <Card style={{ padding: 50 }} className="LoginCard">
             <Card.Body>
               <Card.Title className="text-center">Login</Card.Title>
               <Form>

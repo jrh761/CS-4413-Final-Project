@@ -2,7 +2,9 @@
     font-size: 2rem;
     font-weight: bold;
     color: whitesmoke !important;
-    margin-left: 20px;
+    padding-bottom: 1rem;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .HomeContainer {
@@ -10,6 +12,8 @@
     padding: 0.5rem;
     border-radius: 2rem !important;
     color: whitesmoke !important;
+    margin-bottom: 5%;
+    background-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgb(49, 57, 49));
 }
 
 .HomeBodyDiv {

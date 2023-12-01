@@ -7,6 +7,7 @@ import axios from "../utils/api";
 import UserContext from "../context/UserContext";
 
 import "./Header.css";
+import "./PostCard.css";
 
 type Props = {
   setPosts: (posts: Post[]) => void;
@@ -45,8 +46,8 @@ const CreatePost: React.FC<Props> = ({ posts, setPosts }) => {
 
   return (
     <div>
-      <h2>Create Post</h2>
-      <Form>
+      <h2 className="PostTitle">Create Post</h2>
+      <Form className="PostWrapper">
         <Form.Group className="py-4" controlId="postContent">
           <Form.Control
             className="py-4"

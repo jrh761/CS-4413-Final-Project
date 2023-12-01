@@ -3,12 +3,15 @@
     border-bottom-left-radius: 1rem !important;
     border-bottom-right-radius: 1rem !important;
     padding: 0.5rem;
+    background-image: linear-gradient(to bottom, transparent 0%, transparent 40%, rgb(49, 57, 49));
     color: whitesmoke;
 }
 
 .NavbarBrand {
     color: whitesmoke !important;
-    margin-left: 2rem;
+    margin-left: 5%;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .HeaderButton {
@@ -23,13 +26,11 @@
     margin-bottom: 0.3rem;
     margin-top: 0.3rem;
     border: 1px solid rgba(255, 255, 255, 0.329) !important;
+    text-align: center;
 }
 
 .HeaderButton:hover {
     background-color: rgb(51, 67, 51) !important;
     border: 1px solid whitesmoke !important;
-}
-
-.HeaderButton {
-    text-align: center;
+    transition-duration: 0s;
 }

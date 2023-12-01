@@ -32,7 +32,7 @@ const Header: React.FC = () => {
           Social Media App
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="navbarCollapse">
+        <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link className="HeaderButton" href="/">
               Feed
