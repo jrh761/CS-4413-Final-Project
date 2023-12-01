@@ -5,6 +5,7 @@ import axios from "./utils/api";
 
 import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
+import Profile from "./pages/Profile";
 import UserContext, {
   LoginToken,
   unauthenticatedUser,
@@ -84,6 +85,7 @@ const App: React.FC = () => {
         <Routes>
           <Route index path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/Profile" element={<Profile />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </Router>
