@@ -35,8 +35,12 @@ const Profile: React.FC = () => {
       return;
     }
 
+    const matchedUser = users.find(
+      (user) => user.id === parseInt(userId ?? "0")
+    );
+
     try {
-      const response = await axios.get(`/posts/user/${user.user.id}`, {
+      const response = await axios.get(`/posts/user/${matchedUser?.id}`, {
         headers: {
           Authorization: `Bearer ${user?.access_token}`,
         },
@@ -163,7 +167,7 @@ const Profile: React.FC = () => {
       <Container className="HomeContainer">
         <div></div>
         <div className="HomeBodyDiv">
-          <h1 className="HomeTitle">{`@${user?.user.first_name} ${user?.user.last_name}'s Posts`}</h1>
+          <h1 className="HomeTitle">{`@${matchedUser?.first_name} ${matchedUser?.last_name}'s Posts`}</h1>
           <div
             style={{
               display: "flex",
@@ -172,18 +176,24 @@ const Profile: React.FC = () => {
               marginTop: 20,
             }}
           >
-            {posts.map((post) => {
-              const replyCount = repliesCount[post.id] ?? 0;
-              return (
-                <PostCard
-                  key={post.id}
-                  post={post}
-                  handleLike={handleLike}
-                  repliesCount={replyCount}
-                  handleDelete={handleDelete}
-                />
-              );
-            })}
+            {posts.length > 0 ? (
+              posts.map((post) => {
+                const replyCount = repliesCount[post.id] ?? 0;
+                return (
+                  <PostCard
+                    key={post.id}
+                    post={post}
+                    handleLike={handleLike}
+                    repliesCount={replyCount}
+                    handleDelete={handleDelete}
+                  />
+                );
+              })
+            ) : (
+              <div style={{ marginLeft: 70 }}>
+                This user has not created any posts.
+              </div>
+            )}
           </div>
         </div>
       </Container>
